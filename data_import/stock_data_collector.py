@@ -4,25 +4,11 @@ from datetime import datetime
 import time
 import yaml
 from pymongo import UpdateOne
+from db_base import MongoDBBase
 
-class StockDataCollector:
+class StockDataCollector(MongoDBBase):
     def __init__(self):
-        # 读取配置文件
-        with open('data_import/config.yaml', 'r', encoding='utf-8') as f:
-            config = yaml.safe_load(f)
-        
-        # 获取MongoDB配置
-        mongo_config = config['mongodb']
-        username = mongo_config['username']
-        password = mongo_config['password']
-        host = mongo_config['host']
-        port = mongo_config['port']
-        database = mongo_config['database']
-        
-        # 连接MongoDB（带认证）
-        self.client = pymongo.MongoClient(f"mongodb://{username}:{password}@{host}:{port}/")
-        self.db = self.client[database]
-
+        super().__init__()
         self.field_mapping = {
             '总市值': 'total_market_value',
             '流通市值': 'circulating_market_value',

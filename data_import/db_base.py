@@ -1,6 +1,8 @@
 import yaml
 import pymongo
 from contextlib import contextmanager
+from pathlib import Path
+
 
 class MongoDBBase:
     _instance = None
@@ -20,7 +22,8 @@ class MongoDBBase:
         """初始化MongoDB连接"""
         try:
             # 读取配置文件
-            with open('data_import/config.yaml', 'r', encoding='utf-8') as f:
+            config_path = Path(__file__).parent / 'config.yaml'
+            with open(config_path, 'r', encoding='utf-8') as f:
                 config = yaml.safe_load(f)
             
             # 获取MongoDB配置
