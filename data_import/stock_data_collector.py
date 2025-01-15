@@ -127,12 +127,13 @@ class StockDataCollector(MongoDBBase):
                 )
                 
                 # 获取上市日期
-                if not begin_time:
-                    begin_time = stock_info.get('listing_date')
+                start_date=begin_time
+                if not start_date:
+                    start_date = stock_info.get('listing_date')
                     
                 # 保存三种复权方式的历史数据
                 for adjust in ["", "qfq", "hfq"]:
-                    history_data = self.get_stock_history(stock_code, begin_time, adjust)
+                    history_data = self.get_stock_history(stock_code, start_date, adjust)
                     if history_data:
                         # 设置集合名称，空值时不添加下划线
                         collection_name = "stock_history"
